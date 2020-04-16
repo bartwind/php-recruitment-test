@@ -1,5 +1,4 @@
 <?php
-
 use DI\ContainerBuilder;
 
 require __DIR__ . '/../vendor/autoload.php';
