@@ -29,6 +29,7 @@
 
     <div>
         <h1>Cache Warmer</h1>
+        <pre>User object: <?php var_dump($this->user) ?></pre>
         <?php if ($this->user): ?>
             <p class="bg-success">Hello <?= $this->user->getDisplayName() ?>!</p>
 
