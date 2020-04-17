@@ -29,9 +29,25 @@
 
     <div>
         <h1>Cache Warmer</h1>
-        <pre>User object: <?php var_dump($this->user) ?></pre>
         <?php if ($this->user): ?>
             <p class="bg-success">Hello <?= $this->user->getDisplayName() ?>!</p>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Total number of pages</th>
+                        <th class="text-center" scope="col">Least recently visited page</th>
+                        <th class="text-center" scope="col">Most recently visited page</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center"><?= $this->getTotalPages() ?? '-' ?></td>
+                        <td class="text-center"><?= $this->getLeastRecentlyVisitedPage() ?? '-' ?></td>
+                        <td class="text-center"><?= $this->getMostRecentlyVisitedPage() ?? '-' ?></td>
+                    </tr>
+                </tbody>
+            </table>
 
             <div class="padded">
                 <form class="form-inline" method="post" action="/website">

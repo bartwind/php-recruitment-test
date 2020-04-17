@@ -22,9 +22,9 @@ class Version3
 
     private function addPageLastVisitTrackTime()
     {
-        $createQuery = <<<SQL
+        $updateQuery = <<<SQL
             ALTER TABLE `pages` ADD `visit_track_time` datetime NULL AFTER `website_id`;
         SQL;
-        $this->database->exec($createQuery);
+        $this->database->exec($updateQuery);
     }
 }
