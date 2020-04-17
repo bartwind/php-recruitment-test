@@ -69,7 +69,7 @@ class IndexAction
     {
         if ($user = $this->user) {
             $page = $this->pageManager->getVisitedByUser($user, PageManager::LEAST_RECENTLY_VISITED_PAGE);
-            if ($websiteId = $page->getWebsiteId()) {
+            if ($page && $websiteId = $page->getWebsiteId()) {
                 $website = $this->websiteManager->getById($websiteId);
                 if ($website) {
                     return $website->getHostname() . '/' . $page->getUrl();
@@ -89,7 +89,7 @@ class IndexAction
     {
         if ($user = $this->user) {
             $page = $this->pageManager->getVisitedByUser($user, PageManager::MOST_RECENTLY_VISITED_PAGE);
-            if ($websiteId = $page->getWebsiteId()) {
+            if ($page && $websiteId = $page->getWebsiteId()) {
                 $website = $this->websiteManager->getById($websiteId);
                 if ($website) {
                     return $website->getHostname() . '/' . $page->getUrl();
