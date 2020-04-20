@@ -30,6 +30,7 @@
     <div>
         <h1>Cache Warmer</h1>
         <?php if ($this->user): ?>
+            <p class="bg-success">Hello <?= $this->user->getDisplayName() ?>!</p>
             <div class="padded">
                 <table class="table table-striped">
                     <tr>
@@ -79,8 +80,6 @@
                     <button type="submit" class="btn btn-primary">Add Website</button>
                 </form>
             </div>
-
-            <p class="bg-success">Hello <?= $this->user->getDisplayName() ?>!</p>
         <?php endif ?>
     </div>
 

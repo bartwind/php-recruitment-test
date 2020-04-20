@@ -41,6 +41,26 @@ class PageManager
         return $statement->fetch(\PDO::FETCH_CLASS);
     }
 
+    
+    public function getByUrlAndWebsiteId(string $url, int $websiteId)
+    {
+        /** @var \PDOStatement $statement */
+        $statement = $this->database->prepare(
+            'SELECT
+                *
+             FROM 
+                `pages` p
+             WHERE 
+                (p.`url` = :url AND p.`website_id` = :websiteId)'
+        );
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Page::class);
+        $statement->bindParam(':url', $url, \PDO::PARAM_STR);
+        $statement->bindParam(':websiteId', $websiteId, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch(\PDO::FETCH_CLASS);
+    }
+
     public function getAllByWebsite(Website $website)
     {
         $websiteId = $website->getWebsiteId();

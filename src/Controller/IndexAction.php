@@ -7,6 +7,7 @@ use Snowdog\DevTest\Model\User;
 use Snowdog\DevTest\Model\UserManager;
 use Snowdog\DevTest\Model\WebsiteManager;
 use Snowdog\DevTest\Model\PageManager;
+use Bartwind\SitemapImporter\SitemapImporter;
 
 class IndexAction
 {

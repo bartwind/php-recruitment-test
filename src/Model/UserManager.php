@@ -29,6 +29,30 @@ class UserManager
         return $user;
     }
 
+    /**
+     * Get User by ID
+     *
+     * @param int $id
+     * @return User|bool
+     */
+    public function getById(int $id) : User
+    {
+        /** @var \PDOStatement $statement */
+        $statement = $this->database->prepare(
+            'SELECT
+                *
+             FROM
+                `users` u 
+             WHERE 
+                (u.`user_id` = :userId)'
+        );
+        $statement->setFetchMode(\PDO::FETCH_CLASS, User::class);
+        $statement->bindParam(':userId', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch(\PDO::FETCH_CLASS);
+    }
+
     public function create($login, $password, $displayName)
     {
         $salt = hash('sha512', microtime());
