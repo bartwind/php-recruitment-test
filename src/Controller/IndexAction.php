@@ -2,16 +2,14 @@
 
 namespace Snowdog\DevTest\Controller;
 
-use Exception;
 use Snowdog\DevTest\Model\User;
 use Snowdog\DevTest\Model\UserManager;
 use Snowdog\DevTest\Model\WebsiteManager;
 use Snowdog\DevTest\Model\PageManager;
-use Bartwind\SitemapImporter\SitemapImporter;
+use Snowdog\DevTest\Component\PermissionRepository;
 
-class IndexAction
+class IndexAction extends AbstractAction
 {
-
     /**
      * @var WebsiteManager
      */
@@ -30,6 +28,7 @@ class IndexAction
 
     public function __construct(UserManager $userManager, WebsiteManager $websiteManager, PageManager $pageManager)
     {
+        parent::__construct(PermissionRepository::RESOURCE_APP_FRONT);
         $this->websiteManager = $websiteManager;
         $this->pageManager = $pageManager;
 
@@ -45,7 +44,6 @@ class IndexAction
         } 
         return [];
     }
-
 
     /**
      * Gets total number of pages associated with user
@@ -103,6 +101,7 @@ class IndexAction
 
     public function execute()
     {
+        parent::execute();
         require __DIR__ . '/../view/index.phtml';
     }
 }

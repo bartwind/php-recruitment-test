@@ -4,8 +4,9 @@ namespace Snowdog\DevTest\Controller;
 
 use Snowdog\DevTest\Model\User;
 use Snowdog\DevTest\Model\UserManager;
+use Snowdog\DevTest\Component\PermissionRepository;
 
-class LoginAction
+class LoginAction extends AbstractAction
 {
     /**
      * @var UserManager
@@ -14,11 +15,13 @@ class LoginAction
 
     public function __construct(UserManager $userManager)
     {
+        parent::__construct(PermissionRepository::RESOURCE_APP_FRONT);
         $this->userManager = $userManager;
     }
 
     public function execute()
     {
+        parent::execute();
         $login = $_POST['login'];
         $password = $_POST['password'];
 

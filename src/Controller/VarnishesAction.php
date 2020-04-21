@@ -6,8 +6,9 @@ use Snowdog\DevTest\Model\UserManager;
 use Snowdog\DevTest\Model\Varnish;
 use Snowdog\DevTest\Model\VarnishManager;
 use Snowdog\DevTest\Model\WebsiteManager;
+use Snowdog\DevTest\Component\PermissionRepository;
 
-class VarnishesAction
+class VarnishesAction extends AbstractAction
 {
     /**
      * @var UserManager
@@ -27,6 +28,7 @@ class VarnishesAction
 
     public function __construct(UserManager $userManager, VarnishManager $varnishManager, WebsiteManager $websiteManager)
     {
+        parent::__construct(PermissionRepository::RESOURCE_APP_BACK);
         $this->userManager = $userManager;
         $this->varnishManager = $varnishManager;
         if(isset($_SESSION['login'])) {
@@ -61,8 +63,9 @@ class VarnishesAction
         return $ids;
     }
 
-    public function execute() {
-
+    public function execute() 
+    {
+        parent::execute();
         include __DIR__ . '/../view/varnish.phtml';
     }
 

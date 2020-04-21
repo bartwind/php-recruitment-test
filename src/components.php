@@ -6,6 +6,7 @@ use Snowdog\DevTest\Command\ImportCommand;
 use Snowdog\DevTest\Component\CommandRepository;
 use Snowdog\DevTest\Component\Menu;
 use Snowdog\DevTest\Component\Migrations;
+use Snowdog\DevTest\Component\PermissionRepository;
 use Snowdog\DevTest\Component\RouteRepository;
 use Snowdog\DevTest\Controller\CreatePageAction;
 use Snowdog\DevTest\Controller\CreateWebsiteAction;
@@ -26,6 +27,41 @@ use Snowdog\DevTest\Menu\LoginMenu;
 use Snowdog\DevTest\Menu\RegisterMenu;
 use Snowdog\DevTest\Menu\WebsitesMenu;
 use Snowdog\DevTest\Menu\VarnishesMenu;
+
+
+// ACL setup
+$acl = PermissionRepository::createAcl();
+
+$roles = PermissionRepository::getRoles();
+$resources = PermissionRepository::getResources();
+
+$guest = $roles[PermissionRepository::ACCESS_LEVEL_GUEST];
+$user  = $roles[PermissionRepository::ACCESS_LEVEL_USER];
+
+$front = $resources[PermissionRepository::RESOURCE_APP_FRONT];
+$back  = $resources[PermissionRepository::RESOURCE_APP_BACK];
+
+// Guest's scope
+$acl->addRule($guest, $front, IndexAction::class, true);
+$acl->addRule($guest, $front, LoginFormAction::class, true);
+$acl->addRule($guest, $front, LoginAction::class, true);
+$acl->addRule($guest, $front, RegisterFormAction::class, true);
+$acl->addRule($guest, $front, RegisterAction::class, true);
+
+// User's scope
+$acl->addRule($user, $front, IndexAction::class, true);
+$acl->addRule($user, $front, LoginFormAction::class, false);
+$acl->addRule($user, $front, RegisterFormAction::class, false);
+$acl->addRule($user, $back, WebsiteAction::class, true);
+$acl->addRule($user, $back, VarnishesAction::class, true);
+$acl->addRule($user, $back, ImporterAction::class, true);
+
+// Redirects guest to login page
+PermissionRepository::$redirects = [
+    IndexAction::class
+];
+
+PermissionRepository::saveAcl($acl);
 
 RouteRepository::registerRoute('GET', '/', IndexAction::class, 'execute');
 RouteRepository::registerRoute('GET', '/login', LoginFormAction::class, 'execute');

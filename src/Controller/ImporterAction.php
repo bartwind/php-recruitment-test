@@ -3,8 +3,9 @@
 namespace Snowdog\DevTest\Controller;
 
 use Snowdog\DevTest\Model\UserManager;
+use Snowdog\DevTest\Component\PermissionRepository;
 
-class ImporterAction
+class ImporterAction extends AbstractAction
 {
     /**
      * @var User
@@ -13,6 +14,7 @@ class ImporterAction
 
     public function __construct(UserManager $userManager)
     {
+        parent::__construct(PermissionRepository::RESOURCE_APP_BACK);
         $this->userManager = $userManager;
 
         if (isset($_SESSION['login'])) {
@@ -22,6 +24,7 @@ class ImporterAction
 
     public function execute()
     {
+        parent::execute();
         require __DIR__ . '/../view/importer.phtml';
     }
 }
